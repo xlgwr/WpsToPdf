@@ -55,11 +55,5 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WpsToPdf.Core\WpsToPdf.Core.csproj">
-      <Project>{40225961-7031-4212-9260-6a6cb9eeae65}</Project>
-      <Name>WpsToPdf.Core</Name>
-    </ProjectReference>
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
