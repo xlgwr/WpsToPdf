@@ -3,7 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29102.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpsToPdf", "WpsToPdf.csproj", "{8F8C7A0B-4660-419C-9C04-BC83A4806F98}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpsToPdf.Console", "WpsToPdf.Console.csproj", "{8F8C7A0B-4660-419C-9C04-BC83A4806F98}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WpsToPdf.Core", "..\WpsToPdf.Core\WpsToPdf.Core.csproj", "{40225961-7031-4212-9260-6A6CB9EEAE65}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8F8C7A0B-4660-419C-9C04-BC83A4806F98}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F8C7A0B-4660-419C-9C04-BC83A4806F98}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F8C7A0B-4660-419C-9C04-BC83A4806F98}.Release|Any CPU.Build.0 = Release|Any CPU
+		{40225961-7031-4212-9260-6A6CB9EEAE65}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{40225961-7031-4212-9260-6A6CB9EEAE65}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{40225961-7031-4212-9260-6A6CB9EEAE65}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{40225961-7031-4212-9260-6A6CB9EEAE65}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

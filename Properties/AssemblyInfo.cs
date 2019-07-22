@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // 有关程序集的一般信息由以下
 // 控制。更改这些特性值可修改
 // 与程序集关联的信息。
-[assembly: AssemblyTitle("ConsoleApp2")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("WpsToPdf")]
+[assembly: AssemblyDescription("xlgwr")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("ConsoleApp2")]
+[assembly: AssemblyCompany("xlgwr")]
+[assembly: AssemblyProduct("WpsToPdf")]
 [assembly: AssemblyCopyright("Copyright ©  2019")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

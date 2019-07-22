@@ -12,8 +12,12 @@ namespace ConsoleApp1
             string filepath2 = AppDomain.CurrentDomain.BaseDirectory + @"Template\Template311x.xlsx";
 
             var pdfhelp = new ToPdfHelper("xls");
+            var pdfhelpx = new ToPdfHelper("xlsx");
 
-            pdfhelp.XlsWpsToPdf(filepath, "Template311.xls");
+            var filename = pdfhelp.XlsWpsToPdf(filepath, "Template311.xls");
+            var filename2 = pdfhelpx.XlsWpsToPdf(filepath2, "Template311x.xlsx");
+
+            Console.WriteLine("生成pdf成功!" + filename);
 
             Console.ReadKey();
         }
