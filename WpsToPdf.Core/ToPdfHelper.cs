@@ -11,17 +11,29 @@ namespace ConsoleApp1
     public class ToPdfHelper : IDisposable
     {
         dynamic wps;
-        public ToPdfHelper(string typeName)
+        public string typeName { get; private set; }
+        public string fileSource { get; private set; }
+        public ToPdfHelper(string fileSource)
         {
-            if (typeName == "xls" || typeName == "xlsx")
-            {
-                typeName = "KET.Application";
-            }
-            else if (typeName == "ppt" || typeName == "pptx")
-                typeName = "KWPP.Application";
-            else
-                typeName = "KWps.Application";
+            var typeName = Path.GetExtension(fileSource);
 
+            this.typeName = typeName;
+            this.fileSource = fileSource;
+
+            switch (typeName)
+            {
+                case ".xls":
+                case ".xlsx":
+                    typeName = "KET.Application";
+                    break;
+                case ".ppt":
+                case ".pptx":
+                    typeName = "KWPP.Application";
+                    break;
+                default:
+                    typeName = "KWps.Application";
+                    break;
+            }
             //创建wps实例，需提前安装wps
             Type type = Type.GetTypeFromProgID(typeName);
 
@@ -30,20 +42,40 @@ namespace ConsoleApp1
 
             wps = Activator.CreateInstance(type);
         }
+        public string SavePdf(string wpsFilename)
+        {
+            string result = "";
+            switch (typeName)
+            {
+                case ".xls":
+                case ".xlsx":
+                    result = XlsWpsToPdf(fileSource, wpsFilename);
+                    break;
+                case ".ppt":
+                case ".pptx":
+                    result = PPTWpsToPdf(fileSource, wpsFilename);
+                    break;
+                default:
+                    result = WordWpsToPdf(fileSource, wpsFilename);
+                    break;
+            }
+            return result;
+        }
         /// <summary>
         /// 
         /// </summary>
         /// <param name="saveUrl"></param>
         /// <param name="wpsFilename"></param>
         /// <returns></returns>
-        public string XlsWpsToPdf(string fileSource, string wpsFilename)
+        private string XlsWpsToPdf(string fileSource, string wpsFilename)
         {
             if (wpsFilename == null)
             {
                 throw new ArgumentNullException("wpsFilename");
 
             }
-            var pdfSavePath = Path.ChangeExtension(fileSource, "pdf");
+            string path = Path.GetDirectoryName(fileSource);
+            var pdfSavePath = Path.Combine(path, string.Format("{0}_{1}.pdf", wpsFilename, Guid.NewGuid().ToString()));
             try
             {
                 XlFixedFormatType targetType = XlFixedFormatType.xlTypePDF;
@@ -66,7 +98,7 @@ namespace ConsoleApp1
             {
                 Dispose();
             }
-            return Path.ChangeExtension(wpsFilename, "pdf");
+            return pdfSavePath;
         }
 
         /// <summary>
@@ -75,20 +107,22 @@ namespace ConsoleApp1
         /// <param name="saveUrl"></param>
         /// <param name="wpsFilename"></param>
         /// <returns></returns>
-        public string WordWpsToPdf(string fileSource, string wpsFilename)
+        private string WordWpsToPdf(string fileSource, string wpsFilename)
         {
             if (wpsFilename == null)
             {
                 throw new ArgumentNullException("wpsFilename");
 
             }
-            var pdfPath = Path.ChangeExtension(fileSource, "pdf");
+            string path = Path.GetDirectoryName(fileSource);
+            var pdfSavePath = Path.Combine(path, string.Format("{0}_{1}.pdf", wpsFilename, Guid.NewGuid().ToString()));
+
             try
             {
                 //用wps 打开word不显示界面
                 dynamic doc = wps.Documents.Open(fileSource, Visible: false);
                 //doc 转pdf
-                doc.ExportAsFixedFormat(pdfPath, WdExportFormat.wdExportFormatPDF);
+                doc.ExportAsFixedFormat(pdfSavePath, WdExportFormat.wdExportFormatPDF);
 
                 //设置隐藏菜单栏和工具栏
                 //wps.setViewerPreferences(PdfWriter.HideMenubar | PdfWriter.HideToolbar);
@@ -106,16 +140,17 @@ namespace ConsoleApp1
             {
                 Dispose();
             }
-            return Path.ChangeExtension(wpsFilename, "pdf");
+            return pdfSavePath;
         }
-        public string PPTWpsToPdf(string fileSource, string wpsFilename)
+        private string PPTWpsToPdf(string fileSource, string wpsFilename)
         {
             if (wpsFilename == null)
             {
                 throw new ArgumentNullException("wpsFilename");
 
             }
-            var pdfPath = Path.ChangeExtension(fileSource, "pdf");
+            string path = Path.GetDirectoryName(fileSource);
+            var pdfSavePath = Path.Combine(path, string.Format("{0}_{1}.pdf", wpsFilename, Guid.NewGuid().ToString()));
             try
             {
 
@@ -131,7 +166,7 @@ namespace ConsoleApp1
                 //      MsoTriState.msoCTrue, null, PpPrintRangeType.ppPrintAll,"",
                 //      false, false, false, false, false, missing);
 
-                doc.SaveAs(pdfPath, PpSaveAsFileType.ppSaveAsPDF, MsoTriState.msoTrue);
+                doc.SaveAs(pdfSavePath, PpSaveAsFileType.ppSaveAsPDF, MsoTriState.msoTrue);
 
                 //设置隐藏菜单栏和工具栏
                 //wps.setViewerPreferences(PdfWriter.HideMenubar | PdfWriter.HideToolbar);
@@ -149,10 +184,8 @@ namespace ConsoleApp1
             {
                 Dispose();
             }
-            return Path.ChangeExtension(wpsFilename, "pdf");
+            return pdfSavePath;
         }
-
-
         public void Dispose()
         {
             if (wps != null) { wps.Quit(); wps = null; }

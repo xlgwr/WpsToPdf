@@ -6,13 +6,13 @@ using System.Web.Mvc;
 
 namespace WpsToPdf.WebApi.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        public ActionResult Index()
+        public JsonResult Index()
         {
             ViewBag.Title = "Home Page";
 
-            return View();
+            return ToJsonResult("你可以正常调用了。");
         }
     }
 }

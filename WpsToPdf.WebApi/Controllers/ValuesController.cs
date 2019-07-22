@@ -1,5 +1,7 @@
-﻿using System;
+﻿using ConsoleApp1;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Net;
 using System.Net.Http;
@@ -9,6 +11,16 @@ namespace WpsToPdf.WebApi.Controllers
 {
     public class ValuesController : ApiController
     {
+        [HttpGet]
+        [Route("api/getPdf")]
+        public string GetPdf(string fileSource, string wpsFilename)
+        {
+           
+            ToPdfHelper toPdfHelper = new ToPdfHelper(fileSource);
+            var saveFile = toPdfHelper.SavePdf(wpsFilename);
+            return saveFile;
+             
+        }
         // GET api/values
         public IEnumerable<string> Get()
         {

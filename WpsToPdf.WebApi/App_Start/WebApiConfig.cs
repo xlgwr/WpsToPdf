@@ -9,6 +9,13 @@ namespace WpsToPdf.WebApi
     {
         public static void Register(HttpConfiguration config)
         {
+            var formatters = GlobalConfiguration.Configuration.Formatters;
+            var jsonFormatter = formatters.JsonFormatter;
+            var settings = jsonFormatter.SerializerSettings;
+            //settings.Formatting = Newtonsoft.Json.Formatting.Indented;
+            settings.DateFormatString = "yyyy-MM-dd HH:mm:ss";
+            //settings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+
             // Web API 配置和服务
 
             // Web API 路由
