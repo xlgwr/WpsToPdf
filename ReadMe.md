@@ -1,3 +1,8 @@
+# 功能说明
+* 主要引用Wps金山办公软件生成pdf功能
+* 可部署到IIS服务器，直接调用API，生成PDF文件
+* 可转文件类型，xls,xlsx,ppt,pptx,doc,docx等Wps金山办公软件所有支持的文件类型。
+# 完全免费，再也不用担心转pdf文件乱来乱去的问题了。第三方插件Bye Bye.
 # 安装最新Wps 金山办公软件
  * 引用Wps 对应com dll
 
